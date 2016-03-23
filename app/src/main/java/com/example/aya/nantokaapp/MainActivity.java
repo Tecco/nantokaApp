@@ -20,11 +20,11 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        
+
         TextView text = (TextView) findViewById(R.id.text);
         fab.setOnClickListener(view -> {
             i = i+ 200;
-            text.setText("今月、" + String.valueOf(i) + "円");
+            text.setText(String.valueOf(i) + "円");
         });
     }
 

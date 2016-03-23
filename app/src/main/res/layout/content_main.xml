@@ -15,14 +15,26 @@
     tools:context="com.example.aya.nantokaapp.MainActivity">
 
     <TextView
-        android:id="@+id/text"
-        android:text="今月、0円"
+        android:text="今月、"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textSize="18dp" />
+
+    <TextView
+        android:id="@+id/text"
+        android:text="0円"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="50dp"
+        android:textColor="#333"
+        android:gravity="center"
+        android:layout_marginTop="25dp"
+        android:layout_marginBottom="25dp" />
 
     <TextView
         android:text="コインランドリーで使ったお(`・ω・´)"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textSize="18dp" />
 
 </LinearLayout>
