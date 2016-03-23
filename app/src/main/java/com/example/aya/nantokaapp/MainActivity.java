@@ -1,5 +1,7 @@
 package com.example.aya.nantokaapp;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -23,8 +25,15 @@ public class MainActivity extends AppCompatActivity {
 
         TextView text = (TextView) findViewById(R.id.text);
         fab.setOnClickListener(view -> {
-            i = i+ 200;
+            SharedPreferences pref = getSharedPreferences("Fee", Context.MODE_PRIVATE);
+
+            int fee = pref.getInt("Fee", 0);
+            i = fee + 200;
             text.setText(String.valueOf(i) + "円");
+
+            SharedPreferences.Editor editor = pref.edit();
+            editor.putInt("Fee", i);
+            editor.apply();
         });
     }
 
