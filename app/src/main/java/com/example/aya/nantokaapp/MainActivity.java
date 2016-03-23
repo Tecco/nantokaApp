@@ -21,20 +21,25 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_add);
+        FloatingActionButton fabAdd = (FloatingActionButton) findViewById(R.id.fab_add);
+        FloatingActionButton fabRemove = (FloatingActionButton) findViewById(R.id.fab_remove);
 
+        fabAdd.setOnClickListener(view -> updateFee(200));
+        fabRemove.setOnClickListener(view -> updateFee(-200));
+    }
+
+    private void updateFee(int price) {
         TextView text = (TextView) findViewById(R.id.text);
-        fab.setOnClickListener(view -> {
-            SharedPreferences pref = getSharedPreferences("Fee", Context.MODE_PRIVATE);
 
-            int fee = pref.getInt("Fee", 0);
-            i = fee + 200;
-            text.setText(String.valueOf(i) + "円");
+        SharedPreferences pref = getSharedPreferences("Fee", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        int fee = pref.getInt("Fee", 0);
 
-            SharedPreferences.Editor editor = pref.edit();
-            editor.putInt("Fee", i);
-            editor.apply();
-        });
+        i = fee + price;
+        text.setText(i + getString(R.string.yen));
+
+        editor.putInt("Fee", i);
+        editor.apply();
     }
 
     @Override

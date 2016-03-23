@@ -2,4 +2,5 @@
     <string name="app_name">nantokaApp</string>
     <string name="action_settings">Settings</string>
     <string name="action_others">Others</string>
+    <string name="yen">円</string>
 </resources>
