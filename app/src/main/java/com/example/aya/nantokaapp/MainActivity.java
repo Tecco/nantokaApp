@@ -24,22 +24,34 @@ public class MainActivity extends AppCompatActivity {
         FloatingActionButton fabAdd = (FloatingActionButton) findViewById(R.id.fab_add);
         FloatingActionButton fabRemove = (FloatingActionButton) findViewById(R.id.fab_remove);
 
+        updateFee(0);
+
         fabAdd.setOnClickListener(view -> updateFee(200));
         fabRemove.setOnClickListener(view -> updateFee(-200));
     }
 
     private void updateFee(int price) {
         TextView text = (TextView) findViewById(R.id.text);
-
-        SharedPreferences pref = getSharedPreferences("Fee", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = pref.edit();
-        int fee = pref.getInt("Fee", 0);
+        int fee = getFee();
 
         i = fee + price;
         text.setText(i + getString(R.string.yen));
 
+        saveFee();
+    }
+
+    private void saveFee() {
+        SharedPreferences pref = getSharedPreferences("Fee", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
         editor.putInt("Fee", i);
         editor.apply();
+    }
+
+    private int getFee() {
+        SharedPreferences pref = getSharedPreferences("Fee", Context.MODE_PRIVATE);
+        int fee = pref.getInt("Fee", 0);
+
+        return fee;
     }
 
     @Override
