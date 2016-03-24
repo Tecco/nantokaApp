@@ -14,6 +14,8 @@ public class MainActivity extends AppCompatActivity {
 
     private static int i = 0;
 
+    private static final int WASH_PROCE = 200;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,8 +28,8 @@ public class MainActivity extends AppCompatActivity {
 
         initFee();
 
-        fabAdd.setOnClickListener(view -> updateFee(200));
-        fabRemove.setOnClickListener(view -> updateFee(-200));
+        fabAdd.setOnClickListener(view -> updateFee(WASH_PROCE));
+        fabRemove.setOnClickListener(view -> updateFee(-WASH_PROCE));
     }
 
     private void initFee() {
