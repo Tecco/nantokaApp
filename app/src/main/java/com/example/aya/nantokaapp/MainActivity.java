@@ -58,9 +58,7 @@ public class MainActivity extends AppCompatActivity {
 
     private int getTotalFee() {
         SharedPreferences pref = getSharedPreferences(KEY_TOTAL_FEE, Context.MODE_PRIVATE);
-        int fee = pref.getInt(KEY_TOTAL_FEE, 0);
-
-        return fee;
+        return pref.getInt(KEY_TOTAL_FEE, 0);
     }
 
     @Override
