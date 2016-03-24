@@ -13,6 +13,7 @@ import android.widget.TextView;
 public class MainActivity extends AppCompatActivity {
 
     private static final int WASH_PRICE = 200;
+    public static final String KEY_TOTAL_FEE = "fee";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,14 +48,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void saveTotalFee(int totalFee) {
-        SharedPreferences pref = getSharedPreferences("Fee", Context.MODE_PRIVATE);
+        SharedPreferences pref = getSharedPreferences(KEY_TOTAL_FEE, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
         editor.putInt("Fee", totalFee);
         editor.apply();
     }
 
     private int getTotalFee() {
-        SharedPreferences pref = getSharedPreferences("Fee", Context.MODE_PRIVATE);
+        SharedPreferences pref = getSharedPreferences(KEY_TOTAL_FEE, Context.MODE_PRIVATE);
         int fee = pref.getInt("Fee", 0);
 
         return fee;
