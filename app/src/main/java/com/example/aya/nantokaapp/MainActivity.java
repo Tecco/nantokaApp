@@ -38,9 +38,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void updateFee(int price) {
         TextView text = (TextView) findViewById(R.id.text);
-        int fee = getTotalFee();
 
-        i = fee + price;
+        i = getTotalFee() + price;
         if (i < 0) return;
 
         text.setText(i + getString(R.string.yen));
