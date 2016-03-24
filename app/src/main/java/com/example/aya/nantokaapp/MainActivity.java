@@ -35,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
         int fee = getFee();
 
         i = fee + price;
+        if (i < 0) return;
+
         text.setText(i + getString(R.string.yen));
 
         saveFee();
