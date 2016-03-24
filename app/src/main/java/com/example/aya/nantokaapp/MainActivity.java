@@ -24,10 +24,14 @@ public class MainActivity extends AppCompatActivity {
         FloatingActionButton fabAdd = (FloatingActionButton) findViewById(R.id.fab_add);
         FloatingActionButton fabRemove = (FloatingActionButton) findViewById(R.id.fab_remove);
 
-        updateFee(0);
+        initFee();
 
         fabAdd.setOnClickListener(view -> updateFee(200));
         fabRemove.setOnClickListener(view -> updateFee(-200));
+    }
+
+    private void initFee() {
+        updateFee(0);
     }
 
     private void updateFee(int price) {
