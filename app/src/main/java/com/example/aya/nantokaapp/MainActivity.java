@@ -12,8 +12,6 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static int i = 0;
-
     private static final int WASH_PRICE = 200;
 
     @Override
@@ -39,18 +37,19 @@ public class MainActivity extends AppCompatActivity {
     private void updateFee(int price) {
         TextView text = (TextView) findViewById(R.id.text);
 
-        i = getTotalFee() + price;
-        if (i < 0) return;
+        // TODO: なんか名前が気持ち悪くなってきたけど考える気力が起きない
+        int updatedFee = getTotalFee() + price;
+        if (updatedFee < 0) return;
 
-        text.setText(i + getString(R.string.yen));
+        text.setText(updatedFee + getString(R.string.yen));
 
-        saveTotalFee();
+        saveTotalFee(updatedFee);
     }
 
-    private void saveTotalFee() {
+    private void saveTotalFee(int totalFee) {
         SharedPreferences pref = getSharedPreferences("Fee", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
-        editor.putInt("Fee", i);
+        editor.putInt("Fee", totalFee);
         editor.apply();
     }
 
