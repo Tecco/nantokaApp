@@ -12,6 +12,7 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/activity_main"
     tools:context="com.example.aya.nantokaapp.MainActivity"
+    android:weightSum="1"
     android:orientation="vertical">
 
     <TextView
@@ -36,5 +37,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="18dp" />
+
+    <ImageView
+        android:layout_width="203dp"
+        android:layout_height="187dp"
+        android:id="@+id/imageView"
+        android:src="@drawable/washing_machine"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="40dp"
+        android:layout_weight="0.06" />
 
 </LinearLayout>
