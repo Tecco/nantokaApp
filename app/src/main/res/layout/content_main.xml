@@ -19,7 +19,8 @@
         android:text="今月、"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="18dp" />
+        android:textSize="18dp"
+        android:typeface="normal" />
 
     <TextView
         android:id="@+id/text"
@@ -29,14 +30,16 @@
         android:textSize="50dp"
         android:textColor="#333"
         android:gravity="center"
-        android:layout_marginTop="25dp"
-        android:layout_marginBottom="25dp" />
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="30dp"
+        android:typeface="normal" />
 
     <TextView
         android:text="コインランドリーで使ったお(`・ω・´)"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="18dp" />
+        android:textSize="18dp"
+        android:typeface="normal" />
 
     <ImageView
         android:layout_width="203dp"
