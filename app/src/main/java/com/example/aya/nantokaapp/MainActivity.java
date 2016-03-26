@@ -50,11 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void saveTotalFee(int totalFee) {
         SharedPreferences pref = getSharedPreferences(KEY_TOTAL_FEE, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = pref.edit();
-        editor.putInt(KEY_TOTAL_FEE, totalFee).apply();
-        editor.apply();
-        // 好みだけどメソッドチェーンでも
-        //pref.edit().putInt(KEY_TOTAL_FEE, totalFee).apply();
+        pref.edit().putInt(KEY_TOTAL_FEE, totalFee).apply();
     }
 
     private int getTotalFee() {
