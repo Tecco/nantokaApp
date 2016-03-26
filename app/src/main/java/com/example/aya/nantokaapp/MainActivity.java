@@ -73,8 +73,7 @@ public class MainActivity extends AppCompatActivity {
                 saveTotalFee(0);
                 initTotalFee();
 
-                Toast toast = Toast.makeText(this, getString(R.string.reset_toast), Toast.LENGTH_LONG);
-                toast.show();
+                Toast.makeText(this, getString(R.string.reset_toast), Toast.LENGTH_LONG).show();
 
                 return true;
             default:
