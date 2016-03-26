@@ -70,8 +70,8 @@ public class MainActivity extends AppCompatActivity {
 
         switch (item.getItemId()) {
             case R.id.action_delete:
-                // これでリセットされる予定だったのだが←
-//                initTotalFee();
+                saveTotalFee(0);
+                initTotalFee();
 
                 Toast toast = Toast.makeText(this, getString(R.string.reset_toast), Toast.LENGTH_LONG);
                 toast.show();
