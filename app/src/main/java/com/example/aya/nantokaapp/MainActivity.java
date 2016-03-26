@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         switch (item.getItemId()) {
-            case R.id.action_delete:
+            case R.id.action_reset:
                 saveTotalFee(0);
                 initTotalFee();
 
