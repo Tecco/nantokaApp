@@ -41,7 +41,10 @@ public class MainActivity extends AppCompatActivity {
 
         // TODO: なんか名前が気持ち悪くなってきたけど考える気力が起きない
         int updatedFee = getTotalFee() + price;
-        if (updatedFee < 0) return;
+        
+        if (updatedFee < 0) {
+            return;
+        }
 
         text.setText(updatedFee + getString(R.string.yen));
 
