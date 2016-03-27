@@ -9,10 +9,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static int i = 0;
+    private static final int WASH_PRICE = 200;
+    public static final String KEY_TOTAL_FEE = "fee";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,34 +26,39 @@ public class MainActivity extends AppCompatActivity {
         FloatingActionButton fabAdd = (FloatingActionButton) findViewById(R.id.fab_add);
         FloatingActionButton fabRemove = (FloatingActionButton) findViewById(R.id.fab_remove);
 
-        updateFee(0);
+        initTotalFee();
 
-        fabAdd.setOnClickListener(view -> updateFee(200));
-        fabRemove.setOnClickListener(view -> updateFee(-200));
+        fabAdd.setOnClickListener(view -> updateFee(WASH_PRICE));
+        fabRemove.setOnClickListener(view -> updateFee(-WASH_PRICE));
+    }
+
+    private void initTotalFee() {
+        updateFee(0);
     }
 
     private void updateFee(int price) {
         TextView text = (TextView) findViewById(R.id.text);
-        int fee = getFee();
 
-        i = fee + price;
-        text.setText(i + getString(R.string.yen));
+        // TODO: なんか名前が気持ち悪くなってきたけど考える気力が起きない
+        int updatedFee = getTotalFee() + price;
+        
+        if (updatedFee < 0) {
+            return;
+        }
 
-        saveFee();
+        text.setText(updatedFee + getString(R.string.yen));
+
+        saveTotalFee(updatedFee);
     }
 
-    private void saveFee() {
-        SharedPreferences pref = getSharedPreferences("Fee", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = pref.edit();
-        editor.putInt("Fee", i);
-        editor.apply();
+    private void saveTotalFee(int totalFee) {
+        SharedPreferences pref = getSharedPreferences(KEY_TOTAL_FEE, Context.MODE_PRIVATE);
+        pref.edit().putInt(KEY_TOTAL_FEE, totalFee).apply();
     }
 
-    private int getFee() {
-        SharedPreferences pref = getSharedPreferences("Fee", Context.MODE_PRIVATE);
-        int fee = pref.getInt("Fee", 0);
-
-        return fee;
+    private int getTotalFee() {
+        SharedPreferences pref = getSharedPreferences(KEY_TOTAL_FEE, Context.MODE_PRIVATE);
+        return pref.getInt(KEY_TOTAL_FEE, 0);
     }
 
     @Override
@@ -63,15 +70,17 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        switch (item.getItemId()) {
+            case R.id.action_reset:
+                saveTotalFee(0);
+                initTotalFee();
 
-            return true;
+                Toast.makeText(this, getString(R.string.reset_toast), Toast.LENGTH_LONG).show();
+
+                return true;
+            default:
+                // some action
         }
 
         return super.onOptionsItemSelected(item);
