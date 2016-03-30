@@ -85,4 +85,12 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+
+        int layoutHeight = findViewById(R.id.layout).getHeight();
+        System.out.println("height: " + layoutHeight);
+    }
 }
