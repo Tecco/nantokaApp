@@ -23,7 +23,7 @@
         android:typeface="normal" />
 
     <TextView
-        android:id="@+id/text"
+        android:id="@+id/fee_text"
         android:text="@string/init_fee"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -35,7 +35,7 @@
         android:typeface="normal" />
 
     <TextView
-        android:text="@string/text"
+        android:text="@string/ending_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="18dp"

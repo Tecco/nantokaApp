@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateFee(int price) {
-        TextView text = (TextView) findViewById(R.id.text);
+        TextView text = (TextView) findViewById(R.id.fee_text);
 
         // TODO: なんか名前が気持ち悪くなってきたけど考える気力が起きない
         int updatedFee = getTotalFee() + price;
