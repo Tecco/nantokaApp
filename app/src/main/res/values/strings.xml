@@ -3,4 +3,7 @@
     <string name="action_reset">Reset</string>
     <string name="reset_toast">リセットしました"('ω'*)"</string>
     <string name="yen">円</string>
+    <string name="this_month">今月、</string>
+    <string name="init_fee">0円</string>
+    <string name="text">コインランドリーで使ったお(`・ω・´)</string>
 </resources>

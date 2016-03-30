@@ -16,7 +16,7 @@
     android:orientation="vertical">
 
     <TextView
-        android:text="今月、"
+        android:text="@string/this_month"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="18dp"
@@ -24,7 +24,7 @@
 
     <TextView
         android:id="@+id/text"
-        android:text="0円"
+        android:text="@string/init_fee"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="50dp"
@@ -35,7 +35,7 @@
         android:typeface="normal" />
 
     <TextView
-        android:text="コインランドリーで使ったお(`・ω・´)"
+        android:text="@string/text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="18dp"
