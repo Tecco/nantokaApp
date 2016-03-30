@@ -48,6 +48,7 @@
         android:src="@drawable/washing_machine"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="40dp"
-        android:layout_weight="0.06" />
+        android:layout_weight="0.06"
+        android:contentDescription="@string/image_description" />
 
 </LinearLayout>
