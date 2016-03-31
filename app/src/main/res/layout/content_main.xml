@@ -14,7 +14,7 @@
     tools:context="com.example.aya.nantokaapp.MainActivity"
     android:weightSum="1"
     android:orientation="vertical"
-    android:id="@+id/layout">
+    android:id="@+id/content_main_layout">
 
     <TextView
         android:text="@string/this_month"

@@ -90,7 +90,8 @@ public class MainActivity extends AppCompatActivity {
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
 
-        int layoutHeight = findViewById(R.id.layout).getHeight();
+        // 結局使わないかも（わかんない
+        int layoutHeight = findViewById(R.id.content_main_layout).getHeight();
         System.out.println("height: " + layoutHeight);
     }
 }
