@@ -1,6 +1,7 @@
 package com.example.aya.nantokaapp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -78,7 +79,11 @@ public class MainActivity extends AppCompatActivity {
 
                 Toast.makeText(this, getString(R.string.reset_toast), Toast.LENGTH_LONG).show();
 
-                return true;
+                break;
+            case R.id.action_total:
+                Intent intent = new Intent(MainActivity.this, TotalActivity.class);
+                startActivity(intent);
+                break;
             default:
                 // some action
         }
