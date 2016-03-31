@@ -20,7 +20,6 @@ public class TotalActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
     }
 
     @Override
@@ -35,8 +34,11 @@ public class TotalActivity extends AppCompatActivity {
 
         switch (item.getItemId()) {
             case android.R.id.home:
-                // some action
                 finish();
+                break;
+
+            default:
+                break;
         }
 
         return super.onOptionsItemSelected(item);

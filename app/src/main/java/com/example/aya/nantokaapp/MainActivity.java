@@ -78,14 +78,15 @@ public class MainActivity extends AppCompatActivity {
                 initTotalFee();
 
                 Toast.makeText(this, getString(R.string.reset_toast), Toast.LENGTH_LONG).show();
+                break;
 
-                break;
             case R.id.action_total:
-                Intent intent = new Intent(MainActivity.this, TotalActivity.class);
-                startActivity(intent);
+                startActivity(new Intent(MainActivity.this, TotalActivity.class));
                 break;
+
             default:
                 // some action
+                break;
         }
 
         return super.onOptionsItemSelected(item);
