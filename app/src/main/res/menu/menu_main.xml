@@ -8,4 +8,9 @@
         android:orderInCategory="100"
         app:showAsAction="never" />
 
+    <item android:id="@+id/action_total"
+        android:title="@string/action_total"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+
 </menu>
