@@ -1,6 +1,11 @@
 <resources>
     <string name="app_name">nantokaApp</string>
     <string name="action_reset">Reset</string>
+    <string name="action_total">Total</string>
     <string name="reset_toast">リセットしました"('ω'*)"</string>
     <string name="yen">円</string>
+    <string name="this_month">今月、</string>
+    <string name="init_fee">0円</string>
+    <string name="ending_text">コインランドリーで使ったお(`・ω・´)</string>
+    <string name="image_description">washing machine image</string>
 </resources>

@@ -1,6 +1,7 @@
 package com.example.aya.nantokaapp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -37,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateFee(int price) {
-        TextView text = (TextView) findViewById(R.id.text);
+        TextView text = (TextView) findViewById(R.id.fee_text);
 
         // TODO: なんか名前が気持ち悪くなってきたけど考える気力が起きない
         int updatedFee = getTotalFee() + price;
@@ -77,12 +78,26 @@ public class MainActivity extends AppCompatActivity {
                 initTotalFee();
 
                 Toast.makeText(this, getString(R.string.reset_toast), Toast.LENGTH_LONG).show();
+                break;
 
-                return true;
+            case R.id.action_total:
+                startActivity(new Intent(MainActivity.this, TotalActivity.class));
+                break;
+
             default:
                 // some action
+                break;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+
+        // 結局使わないかも（わかんない
+        int layoutHeight = findViewById(R.id.content_main_layout).getHeight();
+        System.out.println("height: " + layoutHeight);
     }
 }
