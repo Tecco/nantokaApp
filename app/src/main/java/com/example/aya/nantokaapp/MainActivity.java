@@ -18,7 +18,10 @@ import java.util.TimeZone;
 public class MainActivity extends AppCompatActivity {
 
     private static final int WASH_PRICE = 200;
+    private static final String TIME_ZONE = "Asia/Tokyo";
     public static final String KEY_TOTAL_FEE = "fee";
+    public static final String KEY_LAST_SHOW_YEAR = "lastShowYear";
+    public static final String KEY_LAST_SHOW_MONTH = "lastShowMonth";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,15 +79,15 @@ public class MainActivity extends AppCompatActivity {
 
     private void totalOfLastMonth() {
         // あれ、Date and Time APIつかえないの…？？（しょぼーん
-        TimeZone timeZone = TimeZone.getTimeZone("Asia/Tokyo");
+        TimeZone timeZone = TimeZone.getTimeZone(TIME_ZONE);
         Calendar nowTime = Calendar.getInstance(timeZone);
         Calendar prefTime = Calendar.getInstance(timeZone);
 
-        SharedPreferences prefYear = getSharedPreferences("lastShowYear", Context.MODE_PRIVATE);
-        SharedPreferences prefMonth = getSharedPreferences("lastShowMonth", Context.MODE_PRIVATE);
+        SharedPreferences prefYear = getSharedPreferences(KEY_LAST_SHOW_YEAR, Context.MODE_PRIVATE);
+        SharedPreferences prefMonth = getSharedPreferences(KEY_LAST_SHOW_MONTH, Context.MODE_PRIVATE);
 
-        int lastYear = prefYear.getInt("lastShowYear", 0);
-        int lastMonth = prefMonth.getInt("lastShowMonth", 0);
+        int lastYear = prefYear.getInt(KEY_LAST_SHOW_YEAR, 0);
+        int lastMonth = prefMonth.getInt(KEY_LAST_SHOW_MONTH, 0);
 
         if (lastYear == 0 && lastMonth == 0) {
             saveLastDate(prefYear, prefMonth, nowTime);
@@ -110,8 +113,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void saveLastDate(SharedPreferences prefYear, SharedPreferences prefMonth, Calendar nowTime) {
-        prefYear.edit().putInt("lastShowYear", nowTime.get(Calendar.YEAR)).apply();
-        prefMonth.edit().putInt("lastShowMonth", nowTime.get(Calendar.MONTH) + 1).apply();
+        prefYear.edit().putInt(KEY_LAST_SHOW_YEAR, nowTime.get(Calendar.YEAR)).apply();
+        prefMonth.edit().putInt(KEY_LAST_SHOW_MONTH, nowTime.get(Calendar.MONTH) + 1).apply();
     }
 
     @Override
