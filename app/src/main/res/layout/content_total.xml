@@ -13,7 +13,6 @@
     tools:showIn="@layout/activity_main"
     tools:context="com.example.aya.nantokaapp.TotalActivity"
     android:weightSum="1"
-    android:orientation="vertical"
-    android:id="@+id/content_main_layout">
+    android:orientation="vertical" >
 
 </LinearLayout>

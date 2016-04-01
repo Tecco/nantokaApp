@@ -12,6 +12,9 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Calendar;
+import java.util.TimeZone;
+
 public class MainActivity extends AppCompatActivity {
 
     private static final int WASH_PRICE = 200;
@@ -31,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
 
         fabAdd.setOnClickListener(view -> updateFee(WASH_PRICE));
         fabRemove.setOnClickListener(view -> updateFee(-WASH_PRICE));
+
+        totalOfLastMonth();
     }
 
     private void initTotalFee() {
@@ -42,14 +47,16 @@ public class MainActivity extends AppCompatActivity {
 
         // TODO: なんか名前が気持ち悪くなってきたけど考える気力が起きない
         int updatedFee = getTotalFee() + price;
-        
+
         if (updatedFee < 0) {
             return;
         }
 
         text.setText(updatedFee + getString(R.string.yen));
 
-        saveTotalFee(updatedFee);
+        if (price != 0) {
+            saveTotalFee(updatedFee);
+        }
     }
 
     private void saveTotalFee(int totalFee) {
@@ -60,6 +67,51 @@ public class MainActivity extends AppCompatActivity {
     private int getTotalFee() {
         SharedPreferences pref = getSharedPreferences(KEY_TOTAL_FEE, Context.MODE_PRIVATE);
         return pref.getInt(KEY_TOTAL_FEE, 0);
+    }
+
+    private void resetTotalFee() {
+        saveTotalFee(0);
+        initTotalFee();
+    }
+
+    private void totalOfLastMonth() {
+        // あれ、Date and Time APIつかえないの…？？（しょぼーん
+        TimeZone timeZone = TimeZone.getTimeZone("Asia/Tokyo");
+        Calendar nowTime = Calendar.getInstance(timeZone);
+        Calendar prefTime = Calendar.getInstance(timeZone);
+
+        SharedPreferences prefYear = getSharedPreferences("lastShowYear", Context.MODE_PRIVATE);
+        SharedPreferences prefMonth = getSharedPreferences("lastShowMonth", Context.MODE_PRIVATE);
+
+        int lastYear = prefYear.getInt("lastShowYear", 0);
+        int lastMonth = prefMonth.getInt("lastShowMonth", 0);
+
+        if (lastYear == 0 && lastMonth == 0) {
+            saveLastDate(prefYear, prefMonth, nowTime);
+            return;
+        }
+
+        prefTime.set(lastYear, lastMonth - 2, 1);
+        prefTime.set(Calendar.DATE, prefTime.getActualMaximum(Calendar.DATE));
+
+        if (nowTime.compareTo(prefTime) <= 0) {
+            return;
+        }
+
+        saveTotalOfLastMonth(nowTime);
+        saveLastDate(prefYear, prefMonth, nowTime);
+        resetTotalFee();
+    }
+
+    private void saveTotalOfLastMonth(Calendar nowTime) {
+        String monthTotalName = nowTime.get(Calendar.MONTH) + "monthTotal";
+        SharedPreferences prefTotal = getSharedPreferences(monthTotalName, Context.MODE_PRIVATE);
+        prefTotal.edit().putInt(monthTotalName, getTotalFee()).apply();
+    }
+
+    private void saveLastDate(SharedPreferences prefYear, SharedPreferences prefMonth, Calendar nowTime) {
+        prefYear.edit().putInt("lastShowYear", nowTime.get(Calendar.YEAR)).apply();
+        prefMonth.edit().putInt("lastShowMonth", nowTime.get(Calendar.MONTH) + 1).apply();
     }
 
     @Override
@@ -74,9 +126,7 @@ public class MainActivity extends AppCompatActivity {
 
         switch (item.getItemId()) {
             case R.id.action_reset:
-                saveTotalFee(0);
-                initTotalFee();
-
+                resetTotalFee();
                 Toast.makeText(this, getString(R.string.reset_toast), Toast.LENGTH_LONG).show();
                 break;
 
