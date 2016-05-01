@@ -45,7 +45,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="もっと前の合計"
+        android:text="@string/more_before_total"
         android:id="@+id/textView"
         android:textSize="18dp"
         android:textColor="#333"
