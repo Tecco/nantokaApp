@@ -18,10 +18,11 @@ import java.util.TimeZone;
 public class MainActivity extends AppCompatActivity {
 
     private static final int WASH_PRICE = 200;
-    private static final String TIME_ZONE = "Asia/Tokyo";
+    public static final String TIME_ZONE = "Asia/Tokyo";
     public static final String KEY_TOTAL_FEE = "fee";
     public static final String KEY_LAST_SHOW_YEAR = "lastShowYear";
     public static final String KEY_LAST_SHOW_MONTH = "lastShowMonth";
+    public static final String MONTH_TOTAL = "monthTotal";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        if (nowTime.compareTo(getPrefLastTime(lastYear, lastMonth)) <= 0) {
+        if (nowTime.compareTo(getPrefLastDate(lastYear, lastMonth)) <= 0) {
             return;
         }
 
@@ -107,16 +108,16 @@ public class MainActivity extends AppCompatActivity {
         prefMonth.edit().putInt(KEY_LAST_SHOW_MONTH, nowTime.get(Calendar.MONTH) + 1).apply();
     }
 
-    private Calendar getPrefLastTime(int lastYear, int lastMonth) {
+    private Calendar getPrefLastDate(int lastYear, int lastMonth) {
         TimeZone timeZone = TimeZone.getTimeZone(TIME_ZONE);
-        Calendar prefTime = Calendar.getInstance(timeZone);
-        prefTime.set(lastYear, lastMonth - 2, 1);
-        prefTime.set(Calendar.DATE, prefTime.getActualMaximum(Calendar.DATE));
-        return prefTime;
+        Calendar prefDate = Calendar.getInstance(timeZone);
+        prefDate.set(lastYear, lastMonth - 2, 1);
+        prefDate.set(Calendar.DATE, prefDate.getActualMaximum(Calendar.DATE));
+        return prefDate;
     }
 
     private void saveTotalOfLastMonth(Calendar nowTime) {
-        String monthTotalName = nowTime.get(Calendar.MONTH) + "monthTotal";
+        String monthTotalName = nowTime.get(Calendar.MONTH) + MONTH_TOTAL;
         SharedPreferences prefTotal = getSharedPreferences(monthTotalName, Context.MODE_PRIVATE);
         prefTotal.edit().putInt(monthTotalName, getTotalFee()).apply();
     }
