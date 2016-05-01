@@ -64,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void saveTotalFee(int totalFee) {
+        // TODO: これMONTH_TOTALんとこにいれてもいーような気もする
         SharedPreferences pref = getSharedPreferences(KEY_TOTAL_FEE, Context.MODE_PRIVATE);
         pref.edit().putInt(KEY_TOTAL_FEE, totalFee).apply();
     }
