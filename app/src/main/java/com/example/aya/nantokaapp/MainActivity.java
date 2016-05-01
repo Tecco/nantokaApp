@@ -35,9 +35,8 @@ public class MainActivity extends AppCompatActivity {
         FloatingActionButton fabAdd = (FloatingActionButton) findViewById(R.id.fab_add);
         FloatingActionButton fabRemove = (FloatingActionButton) findViewById(R.id.fab_remove);
 
-        initTotalFee();
-
         totalOfLastMonth();
+        initTotalFee();
 
         fabAdd.setOnClickListener(view -> updateFee(WASH_PRICE));
         fabRemove.setOnClickListener(view -> updateFee(-WASH_PRICE));
@@ -80,39 +79,45 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void totalOfLastMonth() {
-        // あれ、Date and Time APIつかえないの…？？（しょぼーん
-        TimeZone timeZone = TimeZone.getTimeZone(TIME_ZONE);
-        Calendar nowTime = Calendar.getInstance(timeZone);
-
         SharedPreferences prefDate = getSharedPreferences(KEY_LAST_SHOW, Context.MODE_PRIVATE);
 
         int lastShowYear = prefDate.getInt(KEY_LAST_SHOW_YEAR, 0);
         int lastShowMonth = prefDate.getInt(KEY_LAST_SHOW_MONTH, 0);
 
+        Calendar nowDate = getNowDate();
+
         if (lastShowYear == 0 && lastShowMonth == 0) {
-            saveLastDate(nowTime);
+            saveLastDate(nowDate);
             return;
         }
 
-        if (nowTime.compareTo(getPrefLastDate(lastShowYear, lastShowMonth)) <= 0) {
+        if (nowDate.compareTo(getPrefLastDate(lastShowYear, lastShowMonth)) <= 0) {
             return;
         }
 
-        saveTotalOfLastMonth(nowTime);
-        saveLastDate(nowTime);
+        saveTotalOfLastMonth(nowDate);
+        saveLastDate(nowDate);
         resetTotalFee();
     }
 
-    private void saveLastDate(Calendar nowTime) {
+    private Calendar getNowDate() {
+        // あれ、Date and Time APIつかえないの…？？（しょぼーん
+        TimeZone timeZone = TimeZone.getTimeZone(TIME_ZONE);
+        Calendar nowDate = Calendar.getInstance(timeZone);
+        nowDate.set(Calendar.MONTH, nowDate.get(Calendar.MONTH) + 1);
+        return nowDate;
+    }
+
+    private void saveLastDate(Calendar nowDate) {
         SharedPreferences prefDate = getSharedPreferences(KEY_LAST_SHOW, Context.MODE_PRIVATE);
-        prefDate.edit().putInt(KEY_LAST_SHOW_YEAR, nowTime.get(Calendar.YEAR)).apply();
-        prefDate.edit().putInt(KEY_LAST_SHOW_MONTH, nowTime.get(Calendar.MONTH) + 1).apply();
+        prefDate.edit().putInt(KEY_LAST_SHOW_YEAR, nowDate.get(Calendar.YEAR)).apply();
+        prefDate.edit().putInt(KEY_LAST_SHOW_MONTH, nowDate.get(Calendar.MONTH)).apply();
     }
 
     private Calendar getPrefLastDate(int lastShowYear, int lastShowMonth) {
         TimeZone timeZone = TimeZone.getTimeZone(TIME_ZONE);
         Calendar date = Calendar.getInstance(timeZone);
-        date.set(lastShowYear, lastShowMonth - 2, 1);
+        date.set(lastShowYear, lastShowMonth, 1);
         date.set(Calendar.DATE, date.getActualMaximum(Calendar.DATE));
         return date;
     }
