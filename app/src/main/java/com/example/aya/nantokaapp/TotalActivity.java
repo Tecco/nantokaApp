@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.Calendar;
@@ -29,6 +31,12 @@ public class TotalActivity extends AppCompatActivity {
 
         displayLastMonth();
         displayLastMonthTotal();
+
+        String[] text = {"1月の合計",  "2月の合計" , "3月の合計"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, text);
+        ListView listView = (ListView) findViewById(R.id.total_listView);
+        listView.setAdapter(adapter);
+        listView.setEnabled(false);
     }
 
     private void setMenuReturnButton() {
