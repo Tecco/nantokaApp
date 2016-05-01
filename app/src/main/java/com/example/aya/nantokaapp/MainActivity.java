@@ -125,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
     private void saveTotalOfLastMonth(Calendar nowTime) {
         // TODO: 2ヶ月あいたときのこと考えてなかった
         SharedPreferences prefTotal = getSharedPreferences(MONTH_TOTAL, Context.MODE_PRIVATE);
-        prefTotal.edit().putInt(String.valueOf(nowTime.get(Calendar.MONTH)), getTotalFee()).apply();
+        prefTotal.edit().putInt(String.valueOf(nowTime.get(Calendar.MONTH) - 1), getTotalFee()).apply();
     }
 
     @Override
