@@ -81,7 +81,6 @@ public class MainActivity extends AppCompatActivity {
         // あれ、Date and Time APIつかえないの…？？（しょぼーん
         TimeZone timeZone = TimeZone.getTimeZone(TIME_ZONE);
         Calendar nowTime = Calendar.getInstance(timeZone);
-        Calendar prefTime = Calendar.getInstance(timeZone);
 
         SharedPreferences prefYear = getSharedPreferences(KEY_LAST_SHOW_YEAR, Context.MODE_PRIVATE);
         SharedPreferences prefMonth = getSharedPreferences(KEY_LAST_SHOW_MONTH, Context.MODE_PRIVATE);
@@ -94,10 +93,7 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        prefTime.set(lastYear, lastMonth - 2, 1);
-        prefTime.set(Calendar.DATE, prefTime.getActualMaximum(Calendar.DATE));
-
-        if (nowTime.compareTo(prefTime) <= 0) {
+        if (nowTime.compareTo(getPrefLastTime(lastYear, lastMonth)) <= 0) {
             return;
         }
 
@@ -106,15 +102,23 @@ public class MainActivity extends AppCompatActivity {
         resetTotalFee();
     }
 
+    private void saveLastDate(SharedPreferences prefYear, SharedPreferences prefMonth, Calendar nowTime) {
+        prefYear.edit().putInt(KEY_LAST_SHOW_YEAR, nowTime.get(Calendar.YEAR)).apply();
+        prefMonth.edit().putInt(KEY_LAST_SHOW_MONTH, nowTime.get(Calendar.MONTH) + 1).apply();
+    }
+
+    private Calendar getPrefLastTime(int lastYear, int lastMonth) {
+        TimeZone timeZone = TimeZone.getTimeZone(TIME_ZONE);
+        Calendar prefTime = Calendar.getInstance(timeZone);
+        prefTime.set(lastYear, lastMonth - 2, 1);
+        prefTime.set(Calendar.DATE, prefTime.getActualMaximum(Calendar.DATE));
+        return prefTime;
+    }
+
     private void saveTotalOfLastMonth(Calendar nowTime) {
         String monthTotalName = nowTime.get(Calendar.MONTH) + "monthTotal";
         SharedPreferences prefTotal = getSharedPreferences(monthTotalName, Context.MODE_PRIVATE);
         prefTotal.edit().putInt(monthTotalName, getTotalFee()).apply();
-    }
-
-    private void saveLastDate(SharedPreferences prefYear, SharedPreferences prefMonth, Calendar nowTime) {
-        prefYear.edit().putInt(KEY_LAST_SHOW_YEAR, nowTime.get(Calendar.YEAR)).apply();
-        prefMonth.edit().putInt(KEY_LAST_SHOW_MONTH, nowTime.get(Calendar.MONTH) + 1).apply();
     }
 
     @Override
