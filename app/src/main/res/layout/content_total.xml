@@ -20,7 +20,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="18dp"
-        android:typeface="normal" />
+        android:typeface="normal"
+        android:id="@+id/last_month" />
 
     <TextView
         android:id="@+id/last_month_fee_text"
@@ -40,5 +41,15 @@
         android:layout_height="wrap_content"
         android:textSize="18dp"
         android:typeface="normal" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="もっと前の合計"
+        android:id="@+id/textView"
+        android:textSize="18dp"
+        android:textColor="#333"
+        android:layout_weight="0.03"
+        android:layout_marginTop="40dp" />
 
 </LinearLayout>

@@ -27,11 +27,17 @@ public class TotalActivity extends AppCompatActivity {
 
         setMenuReturnButton();
 
+        displayLastMonth();
         displayLastMonthTotal();
     }
 
     private void setMenuReturnButton() {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    private void displayLastMonth() {
+        TextView text = (TextView) findViewById(R.id.last_month);
+        text.setText("先月(" + getLastMonth() + "月)、");
     }
 
     private void displayLastMonthTotal() {
