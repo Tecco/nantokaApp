@@ -37,7 +37,7 @@ public class TotalActivity extends AppCompatActivity {
 
     private void displayLastMonth() {
         TextView text = (TextView) findViewById(R.id.last_month);
-        text.setText("先月(" + getLastMonth() + "月)、");
+        text.setText("先月（" + getLastMonth() + "月）、");
     }
 
     private void displayLastMonthTotal() {
@@ -52,9 +52,8 @@ public class TotalActivity extends AppCompatActivity {
     }
 
     private int getPrefLastMonthTotal(int lastMonth) {
-        String lastMonthPrefKey = lastMonth + MainActivity.MONTH_TOTAL;
-        SharedPreferences pref = getSharedPreferences(lastMonthPrefKey, Context.MODE_PRIVATE);
-        return pref.getInt(lastMonthPrefKey, 0);
+        SharedPreferences pref = getSharedPreferences(MainActivity.MONTH_TOTAL, Context.MODE_PRIVATE);
+        return pref.getInt(String.valueOf(lastMonth), 0);
     }
 
     @Override

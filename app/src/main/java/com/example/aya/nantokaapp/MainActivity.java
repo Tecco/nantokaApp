@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
     private static final int WASH_PRICE = 200;
     public static final String TIME_ZONE = "Asia/Tokyo";
     public static final String KEY_TOTAL_FEE = "fee";
+    public static final String KEY_LAST_SHOW = "lastShow";
     public static final String KEY_LAST_SHOW_YEAR = "lastShowYear";
     public static final String KEY_LAST_SHOW_MONTH = "lastShowMonth";
     public static final String MONTH_TOTAL = "monthTotal";
@@ -36,10 +37,10 @@ public class MainActivity extends AppCompatActivity {
 
         initTotalFee();
 
+        totalOfLastMonth();
+
         fabAdd.setOnClickListener(view -> updateFee(WASH_PRICE));
         fabRemove.setOnClickListener(view -> updateFee(-WASH_PRICE));
-
-        totalOfLastMonth();
     }
 
     private void initTotalFee() {
@@ -83,43 +84,43 @@ public class MainActivity extends AppCompatActivity {
         TimeZone timeZone = TimeZone.getTimeZone(TIME_ZONE);
         Calendar nowTime = Calendar.getInstance(timeZone);
 
-        SharedPreferences prefYear = getSharedPreferences(KEY_LAST_SHOW_YEAR, Context.MODE_PRIVATE);
-        SharedPreferences prefMonth = getSharedPreferences(KEY_LAST_SHOW_MONTH, Context.MODE_PRIVATE);
+        SharedPreferences prefDate = getSharedPreferences(KEY_LAST_SHOW, Context.MODE_PRIVATE);
 
-        int lastYear = prefYear.getInt(KEY_LAST_SHOW_YEAR, 0);
-        int lastMonth = prefMonth.getInt(KEY_LAST_SHOW_MONTH, 0);
+        int lastShowYear = prefDate.getInt(KEY_LAST_SHOW_YEAR, 0);
+        int lastShowMonth = prefDate.getInt(KEY_LAST_SHOW_MONTH, 0);
 
-        if (lastYear == 0 && lastMonth == 0) {
-            saveLastDate(prefYear, prefMonth, nowTime);
+        if (lastShowYear == 0 && lastShowMonth == 0) {
+            saveLastDate(nowTime);
             return;
         }
 
-        if (nowTime.compareTo(getPrefLastDate(lastYear, lastMonth)) <= 0) {
+        if (nowTime.compareTo(getPrefLastDate(lastShowYear, lastShowMonth)) <= 0) {
             return;
         }
 
         saveTotalOfLastMonth(nowTime);
-        saveLastDate(prefYear, prefMonth, nowTime);
+        saveLastDate(nowTime);
         resetTotalFee();
     }
 
-    private void saveLastDate(SharedPreferences prefYear, SharedPreferences prefMonth, Calendar nowTime) {
-        prefYear.edit().putInt(KEY_LAST_SHOW_YEAR, nowTime.get(Calendar.YEAR)).apply();
-        prefMonth.edit().putInt(KEY_LAST_SHOW_MONTH, nowTime.get(Calendar.MONTH) + 1).apply();
+    private void saveLastDate(Calendar nowTime) {
+        SharedPreferences prefDate = getSharedPreferences(KEY_LAST_SHOW, Context.MODE_PRIVATE);
+        prefDate.edit().putInt(KEY_LAST_SHOW_YEAR, nowTime.get(Calendar.YEAR)).apply();
+        prefDate.edit().putInt(KEY_LAST_SHOW_MONTH, nowTime.get(Calendar.MONTH) + 1).apply();
     }
 
-    private Calendar getPrefLastDate(int lastYear, int lastMonth) {
+    private Calendar getPrefLastDate(int lastShowYear, int lastShowMonth) {
         TimeZone timeZone = TimeZone.getTimeZone(TIME_ZONE);
-        Calendar prefDate = Calendar.getInstance(timeZone);
-        prefDate.set(lastYear, lastMonth - 2, 1);
-        prefDate.set(Calendar.DATE, prefDate.getActualMaximum(Calendar.DATE));
-        return prefDate;
+        Calendar date = Calendar.getInstance(timeZone);
+        date.set(lastShowYear, lastShowMonth - 2, 1);
+        date.set(Calendar.DATE, date.getActualMaximum(Calendar.DATE));
+        return date;
     }
 
     private void saveTotalOfLastMonth(Calendar nowTime) {
-        String monthTotalName = nowTime.get(Calendar.MONTH) + MONTH_TOTAL;
-        SharedPreferences prefTotal = getSharedPreferences(monthTotalName, Context.MODE_PRIVATE);
-        prefTotal.edit().putInt(monthTotalName, getTotalFee()).apply();
+        // TODO: 2ヶ月あいたときのこと考えてなかった
+        SharedPreferences prefTotal = getSharedPreferences(MONTH_TOTAL, Context.MODE_PRIVATE);
+        prefTotal.edit().putInt(String.valueOf(nowTime.get(Calendar.MONTH)), getTotalFee()).apply();
     }
 
     @Override
