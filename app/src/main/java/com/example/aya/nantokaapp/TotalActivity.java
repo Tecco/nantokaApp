@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.TimeZone;
 
@@ -31,12 +32,7 @@ public class TotalActivity extends AppCompatActivity {
 
         displayLastMonth();
         displayLastMonthTotal();
-
-        String[] text = {"1月の合計",  "2月の合計" , "3月の合計"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, text);
-        ListView listView = (ListView) findViewById(R.id.total_listView);
-        listView.setAdapter(adapter);
-        listView.setEnabled(false);
+        displayMoreOldTotal();
     }
 
     private void setMenuReturnButton() {
@@ -62,6 +58,25 @@ public class TotalActivity extends AppCompatActivity {
     private int getPrefLastMonthTotal(int lastMonth) {
         SharedPreferences pref = getSharedPreferences(MainActivity.MONTH_TOTAL, Context.MODE_PRIVATE);
         return pref.getInt(String.valueOf(lastMonth), 0);
+    }
+
+    private void displayMoreOldTotal() {
+        ArrayList<String> monthTotalTextList = new ArrayList<>();
+
+        for (int i = 1; i <= 11; i++) {
+            int month = getLastMonth() - i;
+
+            if (month <= 0) {
+                month = month + 12;
+            }
+
+            monthTotalTextList.add(month + getString(R.string.month_total));
+        }
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, monthTotalTextList);
+        ListView listView = (ListView) findViewById(R.id.total_listView);
+        listView.setAdapter(adapter);
+        listView.setEnabled(false);
     }
 
     @Override

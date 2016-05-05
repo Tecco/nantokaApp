@@ -53,7 +53,6 @@
             android:id="@+id/textView"
             android:textSize="18dp"
             android:textColor="#333"
-            android:layout_weight="0.03"
             android:layout_marginTop="40dp" />
 
         <ListView
