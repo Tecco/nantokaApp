@@ -149,6 +149,10 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, TotalActivity.class));
                 break;
 
+            case R.id.action_timer:
+                startActivity(new Intent(MainActivity.this, TimerActivity.class));
+                break;
+
             default:
                 // some action
                 break;
