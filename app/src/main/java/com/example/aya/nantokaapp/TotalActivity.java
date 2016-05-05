@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.TimeZone;
 
 /**
@@ -61,7 +62,15 @@ public class TotalActivity extends AppCompatActivity {
     }
 
     private void displayMoreOldTotal() {
-        ArrayList<String> monthTotalTextList = new ArrayList<>();
+        ArrayAdapter<String> adapter
+                = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, getMonthTotalList());
+        ListView listView = (ListView) findViewById(R.id.total_listView);
+        listView.setAdapter(adapter);
+        listView.setEnabled(false);
+    }
+
+    private List<String> getMonthTotalList() {
+        List<String> monthTotalTextList = new ArrayList<>();
 
         for (int i = 1; i <= 11; i++) {
             int month = getLastMonth() - i;
@@ -70,13 +79,16 @@ public class TotalActivity extends AppCompatActivity {
                 month = month + 12;
             }
 
-            monthTotalTextList.add(month + getString(R.string.month_total));
+            monthTotalTextList.add(month + getString(R.string.month_total)
+                    + "     " + getPrefTotal(month) + getString(R.string.yen));
         }
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, monthTotalTextList);
-        ListView listView = (ListView) findViewById(R.id.total_listView);
-        listView.setAdapter(adapter);
-        listView.setEnabled(false);
+        return monthTotalTextList;
+    }
+
+    private int getPrefTotal(int month) {
+        SharedPreferences pref = getSharedPreferences(MainActivity.MONTH_TOTAL, Context.MODE_PRIVATE);
+        return pref.getInt(String.valueOf(month), 0);
     }
 
     @Override
